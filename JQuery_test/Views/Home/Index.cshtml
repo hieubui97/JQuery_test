@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    .panel {
+        padding: 20px;
+    }
+
+    .container-fluid {
+        margin-bottom: 30px;
+    }
+</style>
+<h1 style="background-color:dodgerblue; color: white; text-align: center; line-height:70px; margin-top:unset; font-weight:700;"> Blog Tutorail With Jquery</h1>
+
+<div class="container">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-body">
+                <div class="form-group row ">
+                    <div class="col-md-2"></div>
+                    <span class="col-md-2">ID</span>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-2"></div>
+                    <span class="control-span col-md-2">Name</span>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-body row">
+                <div class="col-md-3">
+                    <span class="control-span ">Name</span>
+                    <div class=" ">
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <span class="control-span ">Position</span>
+                    <div class=" ">
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <span class="control-span ">Salary</span>
+                    <div class=" ">
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <span class="control-span ">Date</span>
+                    <div class=" ">
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <span class="control-span ">Office</span>
+                    <div>
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <span class="control-span ">Extn</span>
+                    <div>
+                        <input type="text" class="form-control form-control-sm" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table id="table_list" class="table  table-bordered table-hover" width="100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Positon</th>
+                <th>Salary</th>
+                <th>Start_date</th>
+                <th>Office</th>
+                <th>Extn</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="container-fluid">
+    <div class="card card-default">
+        <div class="card-body row" style="padding-bottom: 2px;padding-top:2px;">
+            <button class="btn btn-outline-primary col-sm-1">f1</button>
+            <button class="btn btn-outline-primary col-sm-1">f2</button>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Data/Blog.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#table_list').DataTable(
+                {
+                    data: JSON.parse(dataJson).users,
+                    columns: [
+                        { data: "id" },
+                        { data: "name" },
+                        { data: "position" },
+                        { data: "salary" },
+                        { data: "start_date" },
+                        { data: "office" },
+                        { data: "extn" },
+                        { data: "delete" }
+                    ],
+                    columnDefs: [
+                        {
+                            targets: -1,
+                            data: null,
+                            defaultContent: '<button type="button" class="btn btn-danger">Delete</button>'
+                        }
+                    ]
+                }
+            );
+        });
+    </script>
+}
