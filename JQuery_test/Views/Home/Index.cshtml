@@ -1,19 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<style>
-    .panel {
-        padding: 20px;
-    }
 
-    .container-fluid {
-        margin-bottom: 30px;
-    }
-
-    .row .btn {
-        margin-right: 8px;
-    }
-</style>
 <h1 style="background-color:dodgerblue; color: white; text-align: center; line-height:70px; margin-top:unset; font-weight:700;"> Blog Tutorail With Jquery</h1>
 
 <div class="container">
@@ -105,7 +93,7 @@
     </table>
 </div>
 
-<div class="container-fluid">
+<div id="nav" class="container-fluid">
     <div class="card card-default">
         <div class="card-body row" style="padding-bottom: 2px;padding-top:2px; ">
             <button class="btn btn-primary col-sm-1">f1</button>
@@ -125,139 +113,7 @@
 </div>
 
 @section scripts{
-    <script src="~/Data/Blog.js"></script>
+    <script src="~/Data/blog.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            var table = $('#table_list').DataTable(
-                {
-                    data: JSON.parse(dataJson).users,
-                    columns: [
-                        { data: "id" },
-                        { data: "name" },
-                        {
-                            data: function (row) {
-                                var offices = JSON.parse(dataJson).positions;
-                                var result = '<select id="position_' + row["id"] + '" class="form-control form-control-sm">';
-                                offices.forEach(function (item) {
-                                    if (row["office"] == item.id) {
-                                        result += '<option selected value="' + row["position"] + '">' + item.name + '</option>'
-                                    }
-                                    else {
-                                        result += '<option value="' + item.id + '">' + item.name + '</option>'
-                                    }
-                                });
-                                result += '</select >';
-                                return result;
-                            } },
-                        {
-                            data: function (row) {
-                                return '<input type="number" data-id="' + row["id"] + '" id="salary_' + row["id"] + '" name="salary" class="form-control form-control-sm" value="' + row["salary"] + '"/>';
-                            }
-                        },
-                        {
-                            data: function (row) {
-                                return '<input type="date" id="date_' + row["id"] + '" class="form-control form-control-sm" value="' + row["start_date"] + '"/>';
-                            }
-                        },
-
-                        {
-                            data: function (row) {
-                                var offices = JSON.parse(dataJson).offices;
-                                var result = '<select id="office_' + row["id"] + '" class="form-control form-control-sm">';
-                                offices.forEach(function (item) {
-                                    if (row["office"] == item.id) {
-                                        result += '<option selected value="' + row["office"] + '">' + item.name + '</option>'
-                                    }
-                                    else {
-                                        result += '<option value="' + item.id + '">' + item.name + '</option>'
-
-                                    }
-                                });
-                                result += '</select >';
-                                return result;
-                            }
-                        },
-                        {
-                            data: function (row) {
-                                return '<input type="number" id="extn_' + row["id"] + '" class="form-control form-control-sm" value="' + row["extn"] + '"/>';
-                            }
-                        },
-                        { data: "delete" }
-                    ],
-                    columnDefs: [
-                        {
-                            targets: -1,
-                            data: null,
-                            defaultContent: '<button type="button" class="btn btn-danger">Delete</button>'
-                        }
-                    ]
-                }
-            );
-
-            //var table = $('#table_list').DataTable();
-            $('#table_list tbody').on('click', 'tr', function () {
-                var data = table.row(this).data();
-                $('#detail_name').val(data["name"]);
-                $('#detail_position').val(data["position"]);
-                $('#detail_salary').val(data["salary"]);
-                $('#detail_date').val(data["start_date"]);
-                $('#detail_office').val(data["office"]);
-                $('#detail_extn').val(data["extn"]);
-            });
-
-            $('#f3').on('click', function () {
-                var id = $('#id').val();
-                var name = $('#name').val();
-
-                table.columns(0).search(id).draw();
-                table.columns(1).search(name).draw();
-            });
-
-            $('#f5').on('click', function () {
-                $('#id').val('');
-                $('#name').val('');
-
-            });
-
-            $('#f10').on('click', function () {
-
-
-                var data = table.rows().data();
-                data.each(function (item, index) {
-                    // bind salary
-                    var salary = $('#salary_' + item.id).val();
-                    if (salary) {
-                        item.salary = salary;
-                    }
-
-                    // bind start_date
-                    var start_date = $('#date_' + item.id).val();
-                    if (start_date) {
-                        item.start_date = start_date;
-                    }
-
-                    // bind extn
-                    var extn = $('#extn_' + item.id).val();
-                    if (extn) {
-                        item.extn = extn;
-                    }
-
-                    // bind position
-                    var position = $('#position_' + item.id + ' option:selected').val();
-                    if (position) {
-                        item.position = position;
-                    }
-
-                    // bind office
-                    var office = $('#office_' + item.id + ' option:selected').val();
-                    if (office) {
-                        item.office = office;
-                    }
-                });
-
-                console.log(data);
-            });
-        });
-    </script>
+    <script src="~/Content/js/myjquery.js"></script>
 }

@@ -1,0 +1,17 @@
+﻿.panel {
+    padding: 20px;
+}
+
+.container-fluid {
+    margin-bottom: 30px;
+}
+
+.row .btn {
+    margin-left: 8px;
+}
+
+#nav {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 0;
+}
