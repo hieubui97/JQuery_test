@@ -1,40 +1,34 @@
-﻿const POSITION = 1;
-const OFFICE = 2;
+﻿function createSelectPositons(row) {
+    var positions = JSON.parse(dataJson).positions;
+    var result = '<select data-id="' + row["id"] + '" id="position_' + row["id"] + '" class="form-control form-control-sm">';
+    positions.forEach(function (item) {
+        if (row["position"] == item.id) {
+            result += '<option selected value="' + row["position"] + '">' + item.name + '</option>'
+        }
+        else {
+            result += '<option value="' + item.id + '">' + item.name + '</option>'
+        }
+    });
+    result += '</select >';
 
+    return result;
+}
 
-function controlCombobox(row, name) {
-    if (name == 1) {
-        var positions = JSON.parse(dataJson).positions;
-        var result = '<select data-id="' + row["id"] + '" id="position_' + row["id"] + '" class="form-control form-control-sm">';
-        positions.forEach(function (item) {
-            if (row["position"] == item.id) {
-                result += '<option selected value="' + row["position"] + '">' + item.name + '</option>'
-            }
-            else {
-                result += '<option value="' + item.id + '">' + item.name + '</option>'
-            }
-        });
-        result += '</select >';
-        return result;
-    }
+function createSelectOffices(row) {
+    var offices = JSON.parse(dataJson).offices;
+    var result = '<select data-id="' + row["id"] + '" id="office_' + row["id"] + '" class="form-control form-control-sm">';
+    offices.forEach(function (item) {
+        if (row["office"] == item.id) {
+            result += '<option selected value="' + row["office"] + '">' + item.name + '</option>'
+        }
+        else {
+            result += '<option value="' + item.id + '">' + item.name + '</option>'
 
-    if (name == 2) {
-        var offices = JSON.parse(dataJson).offices;
-        var result = '<select data-id="' + row["id"] + '" id="office_' + row["id"] + '" class="form-control form-control-sm">';
-        offices.forEach(function (item) {
-            if (row["office"] == item.id) {
-                result += '<option selected value="' + row["office"] + '">' + item.name + '</option>'
-            }
-            else {
-                result += '<option value="' + item.id + '">' + item.name + '</option>'
+        }
+    });
+    result += '</select >';
 
-            }
-        });
-        result += '</select >';
-        return result;
-    }
-
-    return null;
+    return result;
 }
 
 function loadTable() {
@@ -55,7 +49,7 @@ function loadTable() {
                 },
                 {
                     data: function (row) {
-                        var result = controlCombobox(row, POSITION);
+                        var result = createSelectPositons(row);
                         return result;
                     }
                 },
@@ -71,7 +65,7 @@ function loadTable() {
                 },
                 {
                     data: function (row) {
-                        var result = controlCombobox(row, OFFICE);
+                        var result = createSelectOffices(row);
                         return result;
                     }
                 },
@@ -97,12 +91,12 @@ $(document).ready(function () {
     var table = loadTable();
 
     $('#table_list tbody').on('click', 'tr', function () {
-        var name = $(this).closest('[role=row]').find('td:nth-child(2)').text();
-        var position = $(this).closest('[role=row]').find('td:nth-child(3) option:selected').text();
-        var salary = $(this).closest('[role=row]').find('td:nth-child(4)').children().val();
-        var date = $(this).closest('[role=row]').find('td:nth-child(5)').children().val();
-        var office = $(this).closest('[role=row]').find('td:nth-child(6) option:selected').text();
-        var extn = $(this).closest('[role=row]').find('td:nth-child(7)').children().val();
+        var name = $(this).find('td:eq(1)').text(); //var name = $(this).find('td:nth-child(2)').text();
+        var position = $(this).find('td:nth-child(3) option:selected').text();
+        var salary = $(this).find('td:nth-child(4)').find('input').val();
+        var date = $(this).find('td:nth-child(5)').find('input').val();
+        var office = $(this).find('td:nth-child(6) option:selected').text();
+        var extn = $(this).find('td:nth-child(7)').find('input').val();
 
         $('#detail_name').val(name);
         $('#detail_position').val(position);
@@ -150,13 +144,13 @@ $(document).ready(function () {
         //table.columns(1).search(name).draw();
         var content = "";
         $('#table_list tbody tr').each(function () {
-            var tr_id = $(this).closest('[role=row]').find('td:nth-child(1)').text();
-            var tr_name = $(this).closest('[role=row]').find('td:nth-child(2)').text();
+            var tr_id = $(this).find('td:nth-child(1)').text();
+            var tr_name = $(this).find('td:nth-child(2)').text();
 
             if (tr_id == id || tr_name.toLowerCase().includes(name.toLowerCase())) {
                 content += '<tr role="row">' + $(this).html() + '</tr>';
             }
-            $('#table_list tbody').html(content);         
+            $('#table_list tbody').html(content);
         });
     });
 
@@ -169,13 +163,13 @@ $(document).ready(function () {
         var data = new Array();
         $('#table_list tbody tr').each(function () {
             var item = {
-                id: $(this).closest('[role=row]').find('td:nth-child(1)').text(),
-                name: $(this).closest('[role=row]').find('td:nth-child(2)').text(),
-                position: $(this).closest('[role=row]').find('td:nth-child(3) option:selected').text(),
-                salary: $(this).closest('[role=row]').find('td:nth-child(4)').children().val(),
-                date: $(this).closest('[role=row]').find('td:nth-child(5)').children().val(),
-                office: $(this).closest('[role=row]').find('td:nth-child(6) option:selected').text(),
-                extn: $(this).closest('[role=row]').find('td:nth-child(7)').children().val()
+                id: $(this).find('td:nth-child(1)').text(),
+                name: $(this).find('td:nth-child(2)').text(),
+                position: $(this).find('td:nth-child(3) option:selected').text(),
+                salary: $(this).find('td:nth-child(4)').find('input').val(),
+                date: $(this).find('td:nth-child(5)').find('input').val(),
+                office: $(this).find('td:nth-child(6) option:selected').text(),
+                extn: $(this).find('td:nth-child(7)').find('input').val()
             };
 
             data.push(item);
